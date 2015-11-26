@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:dubbo="http://code.alibabatech.com/schema/dubbo" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:util="http://www.springframework.org/schema/util"
+
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd
+		http://www.springframework.org/schema/util
+       	http://www.springframework.org/schema/util/spring-util.xsd">
+
+	<!-- <bean id="propertyConfigurer"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="ignoreUnresolvablePlaceholders" value="true" />
+		<property name="locations">
+			<list>
+				<value>classpath:*.properties</value>
+			</list>
+		</property>
+	</bean> -->
+	
+	<context:property-placeholder location="http://prop_server/${env_path}/ibs-w-admin/w-admin.properties" />
+	
+	<context:component-scan base-package="com.handpay.ibenefit">
+	</context:component-scan>
+	
+	<!-- 所有页面控制器配置开始 -->
+
+	<mvc:annotation-driven>
+		<mvc:message-converters>
+			<!-- default StringHttpMessageConverter, solve encoding problem -->
+			<bean class="org.springframework.http.converter.StringHttpMessageConverter">
+				<constructor-arg value="UTF-8" />
+				<property name="writeAcceptCharset" value="false" />
+			</bean>
+		</mvc:message-converters>
+	</mvc:annotation-driven>
+
+	<!-- 所有页面控制器配置结束 -->
+	<!-- JSP视图解析器 -->
+	<bean
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver"
+		p:prefix="/WEB-INF/views/" p:suffix=".jsp" />
+	<!-- XML视图解析器 -->
+	<bean id="xmlFileViewResolver" class="org.springframework.web.servlet.view.XmlViewResolver">
+		<property name="location">
+			<value>classpath:views.xml</value>
+		</property>
+		<property name="order">
+			<value>1</value>
+		</property>
+	</bean>
+	
+	<bean id="mappingJacksonHttpMessageConverter" class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter" />
+	
+	<!-- File update -->
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver" p:defaultEncoding="utf-8"/>
+	
+	<dubbo:application name="ibenefit-consumer-admin" />
+	<!-- zookeeper注册中心 -->
+	<dubbo:registry protocol="${dubbo.registry.protocol}"
+		address="${dubbo.registry.address}" file="${user.home}/.dubbo-cache/w-admin" group="dubbo-${env_path}" />
+
+	<dubbo:annotation package="com.handpay.ibenefit" />
+	
+	<dubbo:consumer check="false"></dubbo:consumer>
+	
+
+	<dubbo:reference id="authorizationManager" interface="com.handpay.ibenefit.security.service.IAuthorizationManager" version="1.0" />
+	
+	<dubbo:reference id="dictionaryManager" interface="com.handpay.ibenefit.framework.service.IDictionaryManager" version="1.0" />
+	
+	<dubbo:reference id="areaManager" interface="com.handpay.ibenefit.base.area.service.IAreaManager" version="1.0" />
+	
+	<dubbo:reference id="cacheManager" interface="com.handpay.ibenefit.framework.cache.ICacheManager" version="1.0"/>
+	
+	<dubbo:reference id="menuLinkManager" interface="com.handpay.ibenefit.security.service.IMenuLinkManager" version="1.0" />
+	
+	<bean id="dictionaryFacade" class="com.handpay.ibenefit.framework.web.DictionaryFacade">
+		<property name="dictionaryManager" ref="dictionaryManager"></property>
+	</bean>
+
+	<bean id="frameworkFactory" class="com.handpay.ibenefit.framework.web.FrameworkFactory">
+		<property name="authorizationManager" ref="authorizationManager"/>
+		<property name="cacheManager" ref="cacheManager"/>
+	</bean>
+	
+		<bean class="com.handpay.ibenefit.framework.taglib.SelectTag">
+		<property name="dictionaryFacade" ref="dictionaryFacade" />
+	</bean>
+
+	<bean class="com.handpay.ibenefit.framework.taglib.ColumnValueTag">
+		<property name="dictionaryFacade" ref="dictionaryFacade" />
+	</bean>
+
+	<bean class="com.handpay.ibenefit.framework.taglib.DictionaryNameTag">
+		<property name="dictionaryFacade" ref="dictionaryFacade" />
+	</bean>
+	
+	<bean class="com.handpay.ibenefit.taglib.AreaSelectTag">
+		<property name="areaManager" ref="areaManager" />
+	</bean>
+	
+	<bean class="com.handpay.ibenefit.framework.taglib.RadioTag">
+		<property name="dictionaryFacade" ref="dictionaryFacade" />
+	</bean>
+	
+	<bean class="com.handpay.ibenefit.framework.taglib.CheckBoxTag">
+		<property name="dictionaryFacade" ref="dictionaryFacade" />
+	</bean>
+	
+	<bean class="com.handpay.ibenefit.framework.taglib.ButtonTag">
+		<property name="menuLinkManager" ref="menuLinkManager" />
+	</bean>
+	
+	<bean class="com.handpay.ibenefit.framework.taglib.LinkTag">
+		<property name="menuLinkManager" ref="menuLinkManager" />
+	</bean>
+	
+</beans>

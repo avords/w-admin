@@ -1,0 +1,110 @@
+/* ---------------------------------------------------------------------- */
+/*	Login
+/* ---------------------------------------------------------------------- */
+body.login {
+	color: #7F7F7F;
+}
+body.login{
+	background-image: url("../img/login_bg.png");
+	background-color: rgba(0, 0, 0, 0);
+}
+
+body.login .main-login {
+	margin-top: 80px;
+}
+body.login .logo {
+	padding: 20px;
+	text-align: center;
+}
+body.login .box-login, body.login .box-forgot, body.login .box-register {
+	background: #FFFFFF;
+	border-radius: 5px;
+	box-shadow: -30px 30px 50px rgba(0, 0, 0, 0.32);
+	overflow: hidden;
+	padding: 15px;
+}
+body.login .box-forgot, body.login .box-register {
+	display: none;
+}
+body.login .form fieldset {
+	border: none;
+	margin: 0;
+	padding: 10px 0 0;
+}
+body.login a.forgot {
+	color: #909090;
+	font-size: 12px;
+	position: absolute;
+	right: 10px;
+	text-shadow: 1px 1px 1px #FFFFFF;
+	top: 9px;
+}
+body.login label {
+	color: #7F7F7F;
+	font-size: 14px;
+	margin-top: 5px;
+}
+
+body.login .copyright {
+	font-size: 11px;
+	margin: 0 auto;
+	padding: 10px 10px 0;
+	text-align: center;
+}
+body.login .form-actions:before, body.login .form-actions:after {
+	content: "";
+	display: table;
+	line-height: 0;
+}
+body.login .form-actions:after {
+	clear: both;
+}
+body.login .form-actions {
+	margin-top: 15px;
+	padding-top: 10px;
+	display: block;
+	text-align: center;
+}
+body.login .new-account {
+	border-top: 1px dotted #EEEEEE;
+	margin-top: 15px;
+	padding-top: 10px;
+	display: block;
+}
+
+.btn-bricky {
+	background-color: #C83A2A;
+	border-color: #b33426;
+	color: #ffffff;
+}
+.btn-bricky:hover, .btn-bricky:focus, .btn-bricky:active, .btn-bricky.active {
+	background-color: #b33426;
+	border-color: #9e2e21;
+	color: #ffffff;
+}
+.btn-bricky.disabled:hover, .btn-bricky.disabled:focus, .btn-bricky.disabled:active, .btn-bricky.disabled.active, .btn-bricky[disabled]:hover, .btn-bricky[disabled]:focus, .btn-bricky[disabled]:active, .btn-bricky[disabled].active, fieldset[disabled] .btn-bricky:hover, fieldset[disabled] .btn-bricky:focus, fieldset[disabled] .btn-bricky:active, fieldset[disabled] .btn-bricky.active {
+	background-color: #C83A2A;
+	border-color: #C83A2A;
+	color: #ffffff;
+}
+.help-block {
+	display: block;
+	margin-top: 5px;
+	margin-bottom: 0px;
+	color: #737373;
+}
+
+.login-logo{
+  font-size: 35px;
+  margin-left:30px;
+  background: url("../img/logo_head.png") no-repeat;
+  text-align: center;
+  margin-bottom: 25px;
+  font-weight: 300;
+  font-family: ""
+}
+
+.login-logo h2{
+	margin-left: 100px;
+}
+

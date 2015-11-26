@@ -1,0 +1,11 @@
+<decorators defaultdir="/">
+	<excludes>
+		<pattern>*ajax=1*</pattern>
+		<pattern>/login/*</pattern>
+		<pattern>/decorator</pattern>
+	</excludes>
+	<decorator name="decorator" page="decorator">
+		<pattern>/*</pattern>
+	</decorator>
+
+</decorators>
